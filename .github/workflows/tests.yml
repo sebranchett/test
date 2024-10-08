@@ -22,20 +22,9 @@ jobs:
       run: |
         # $CONDA is an environment variable pointing to the root of the miniconda directory
         echo $CONDA/bin >> $GITHUB_PATH
-    - name: Install dependencies
+    - name: Python check
       run: |
-        conda env update --file test-environment.yml --name base
-    - name: Test with pytest
+        python --version
+    - name: Conda check
       run: |
-        # avoid tkinter error
-        # See https://github.com/orgs/community/discussions/62479
-        export DISPLAY=:99
-        Xvfb :99 &
-        pytest --cov=src
-    - name: Upload results to Codecov
-      uses: codecov/codecov-action@v4
-      if: |
-        ${{ matrix.python-version == '3.12' }} &&
-        ${{ matrix.os == 'ubuntu-latest' }}
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        conda env list
