@@ -24,5 +24,8 @@ jobs:
     - name: Conda check
       run: |
         conda env list
-        conda activate base
-        python --version
+        echo $CONDA
+        echo $CONDA/bin
+        echo $CONDA/bin/python
+        $CONDA/bin/python --version
+
