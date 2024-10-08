@@ -5,19 +5,14 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
 
-    runs-on: ${{ matrix.os }}
-    strategy:
-      max-parallel: 5
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.7", "3.10", "3.11", "3.12"]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.11'
     - name: Add conda to system path
       run: |
         # $CONDA is an environment variable pointing to the root of the miniconda directory
@@ -25,6 +20,9 @@ jobs:
     - name: Python check
       run: |
         python --version
+        echo $Python3_ROOT_DIR
     - name: Conda check
       run: |
         conda env list
+        conda activate base
+        python --version
